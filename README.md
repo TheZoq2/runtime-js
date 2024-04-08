@@ -29,7 +29,11 @@ If the application returns a non-zero exit code, the exception `Exit` (exported 
 - The `code` property indicates the exit code. (Currently this is always 1 due to WebAssembly peculiarities.)
 - The `files` property represents the state of the virtual filesystem after the application terminated. This property can be used to retrieve log files or other data aiding in diagnosing the error.
 
-While in general the `runX` function returns a promise, there are two special cases. Calling `runX()` (with no arguments) does not run the application, but preloads and caches, in memory, all of the necessary resources. Calling `runX([...])` (with arguments) after that executes the application synchronously instead of returning a promise.
+Calling `await runX()` (with no arguments) does not run the application, but ensures that all of the necessary resources are fetched and available for use. Once this is done, the additional overload, below, becomes available, which executes the application synchronously instead of returning a promise. This form should only be used in Web Workers and similar non-UI threads, in contexts where the use of an asynchronous API is infeasible.
+
+```js
+const filesOut = runX(args, filesIn, { ..., synchronously: true });
+```
 
 [Uint8Array]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array
 

@@ -56,7 +56,5 @@ await yowaspRuntimeTest.run([], {}, {
 if (!(lines.length === 1 || lines[0] === 'some text'))
     throw 'test 8 failed';
 
-await yowaspRuntimeTest.preload();
-
-if ((yowaspRuntimeTest.execute(['share/foo.txt', 'foo.txt'], {}))['foo.txt'] !== 'contents of foo')
+if ((yowaspRuntimeTest.run(['share/foo.txt', 'foo.txt'], {synchronously: true}))['foo.txt'] !== 'contents of foo')
     throw 'test 9 failed';

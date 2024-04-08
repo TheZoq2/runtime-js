@@ -12,17 +12,14 @@ export type RunOptions = {
     stdin?:  InputStream  | null;
     stdout?: OutputStream | null,
     stderr?: OutputStream | null,
-    decodeASCII?: boolean
+    decodeASCII?: boolean,
+    synchronously?: boolean,
 };
 
 export class Application {
     constructor(resources: () => Promise<any>, instantiate: any, argv0: string);
 
-    preload(): Promise<void>;
-
-    execute(args: string[], files?: Tree, options?: RunOptions): Tree;
-
-    run(args?: string[], files?: Tree, options?: RunOptions): Tree | Promise<Tree> | undefined;
+    run(args?: string[], files?: Tree, options?: RunOptions): Promise<Tree> | Tree | undefined;
 }
 
 export class Exit extends Error {
